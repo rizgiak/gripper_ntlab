@@ -1,0 +1,122 @@
+<?xml version="1.0" ?>
+<robot name="assembly_urdf"
+  xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:property name="body_color" value="Gazebo/DarkGrey" />
+  <xacro:property name="hand_color" value="Gazebo/Grey" />
+  <xacro:property name="rod_a_color" value="Gazebo/Silver" />
+  <xacro:property name="rod_b_color" value="Gazebo/Red" />
+  <xacro:property name="finger_color" value="Gazebo/DarkGrey" />
+  <xacro:property name="roll_color" value="Gazebo/Silver" />
+  <xacro:property name="pinion_color" value="Gazebo/Yellow" />
+
+  <gazebo>
+    <plugin filename="libgazebo_ros_control.so" name="control">
+      <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+      <legacyModeNS>true</legacyModeNS>
+		</plugin>
+  </gazebo>
+  <gazebo reference="base_link">
+    <material>${body_color}</material>
+    <mu1>0.2</mu1>
+    <mu2>0.2</mu2>
+    <selfCollide>false</selfCollide>
+    <maxContacts>10</maxContacts>
+  </gazebo>
+
+  <gazebo reference="r_rod_a_1">
+    <material>${rod_a_color}</material>
+    <selfCollide>true</selfCollide>
+    <dampingFactor>0.001</dampingFactor>
+  </gazebo>
+
+  <gazebo reference="r_finger_1">
+    <material>${finger_color}</material>
+    <selfCollide>true</selfCollide>
+    <dampingFactor>0.001</dampingFactor>
+  </gazebo>
+
+  <gazebo reference="r_roll_1">
+    <material>${roll_color}</material>
+    <selfCollide>true</selfCollide>
+    <dampingFactor>0.01</dampingFactor>
+  </gazebo>
+
+  <gazebo reference="r_pinion_1">
+    <material>${pinion_color}</material>
+    <mu1>0.2</mu1>
+    <mu2>0.2</mu2>
+    <selfCollide>true</selfCollide>
+  </gazebo>
+
+  <gazebo reference="l_pinion_1">
+    <material>${pinion_color}</material>
+    <mu1>0.2</mu1>
+    <mu2>0.2</mu2>
+    <selfCollide>true</selfCollide>
+  </gazebo>
+
+  <gazebo reference="l_hand_1">
+    <material>${hand_color}</material>
+    <mu1>0.2</mu1>
+    <mu2>0.2</mu2>
+    <selfCollide>true</selfCollide>
+  </gazebo>
+
+  <gazebo reference="l_rod_a_1">
+    <material>${rod_a_color}</material>
+    <selfCollide>true</selfCollide>
+    <dampingFactor>0.001</dampingFactor>
+  </gazebo>
+
+  <gazebo reference="r_rod_b_1">
+    <material>${rod_b_color}</material>
+    <selfCollide>true</selfCollide>
+    <dampingFactor>0.001</dampingFactor>
+  </gazebo>
+
+  <gazebo reference="l_roll_1">
+    <material>${roll_color}</material>
+    <selfCollide>true</selfCollide>
+    <dampingFactor>0.01</dampingFactor>
+  </gazebo>
+
+  <gazebo reference="l_finger_1">
+    <material>${finger_color}</material>
+    <selfCollide>true</selfCollide>
+    <dampingFactor>0.001</dampingFactor>
+  </gazebo>
+
+  <gazebo reference="l_rod_b_1">
+    <material>${rod_b_color}</material>
+    <selfCollide>true</selfCollide>
+    <dampingFactor>0.001</dampingFactor>
+  </gazebo>
+
+  <gazebo reference="r_hand_1">
+    <material>${hand_color}</material>
+    <mu1>0.2</mu1>
+    <mu2>0.2</mu2>
+    <selfCollide>true</selfCollide>
+  </gazebo>
+
+  <xacro:macro name="mimic_joint_plugin_gazebo" params="name_prefix parent_joint mimic_joint has_pid:=false multiplier:=1.0 offset:=0 sensitiveness:=0.0 max_effort:=1.0 robot_namespace:=''">
+    <gazebo>
+      <plugin name="${name_prefix}mimic_joint_plugin" filename="libroboticsgroup_gazebo_mimic_joint_plugin.so">
+        <joint>${parent_joint}</joint>
+        <mimicJoint>${mimic_joint}</mimicJoint>
+        <xacro:if value="${has_pid}">          <!-- if set to true, PID parameters from "/gazebo_ros_control/pid_gains/${mimic_joint}" are loaded -->
+          <hasPID />
+        </xacro:if>
+        <multiplier>${multiplier}</multiplier>
+        <offset>${offset}</offset>
+        <sensitiveness>${sensitiveness}</sensitiveness>        <!-- if absolute difference between setpoint and process value is below this threshold, do nothing; 0.0 = disable [rad] -->
+        <maxEffort>${max_effort}</maxEffort>        <!-- only taken into account if has_pid:=true [Nm] -->
+        <xacro:unless value="${robot_namespace == ''}">
+          <robotNamespace>${robot_namespace}</robotNamespace>
+        </xacro:unless>
+      </plugin>
+    </gazebo>
+  </xacro:macro>
+
+</robot>

@@ -1,0 +1,137 @@
+<?xml version="1.0" ?>
+<robot name="assembly_urdf"
+  xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <transmission name="r_hand_rod_a_tran">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="r_hand_rod_a">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="r_hand_rod_a_actr">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="r_rod_a_finger_tran">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="r_rod_a_finger">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="r_rod_a_finger_actr">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="r_finger_roll_tran">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="r_finger_roll">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="r_finger_roll_actr">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="r_base_hand_r_tran">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="r_base_hand_r">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="r_base_hand_r_actr">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="l_base_hand_r_tran">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="l_base_hand_r">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="l_base_hand_r_actr">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="l_base_hand_s_tran">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="l_base_hand_s">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="l_base_hand_s_actr">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="l_hand_rod_a_tran">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="l_hand_rod_a">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="l_hand_rod_a_actr">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="r_hand_rod_b_tran">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="r_hand_rod_b">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="r_hand_rod_b_actr">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="l_finger_roll_tran">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="l_finger_roll">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="l_finger_roll_actr">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="l_rod_a_finger_tran">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="l_rod_a_finger">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="l_rod_a_finger_actr">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="l_hand_rod_b_tran">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="l_hand_rod_b">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="l_hand_rod_b_actr">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="r_base_hand_s_tran">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="r_base_hand_s">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="r_base_hand_s_actr">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+</robot>

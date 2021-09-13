@@ -1,0 +1,55 @@
+assembly_urdf_controller:
+  # Publish all joint states -----------------------------------
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 50
+
+  # Position Controllers --------------------------------------
+  r_hand_rod_a_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: r_hand_rod_a
+    pid: {p: 100.0, i: 0.0, d: 10.0}
+  # r_rod_a_finger_position_controller:
+  #   type: effort_controllers/JointPositionController
+  #   joint: r_rod_a_finger
+  #   pid: {p: 0.0, i: 0.0, d: 0.0}
+  # r_finger_roll_position_controller:
+  #   type: effort_controllers/JointPositionController
+  #   joint: r_finger_roll
+  #   pid: {p: 10.0, i: 0.0, d: 1.0}
+  r_base_hand_r_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: r_base_hand_r
+    pid: {p: 100.0, i: 0.0, d: 10.0}
+  l_base_hand_r_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: l_base_hand_r
+    pid: {p: 100.0, i: 0.0, d: 10.0}
+  # l_base_hand_s_position_controller:
+  #   type: effort_controllers/JointPositionController
+  #   joint: l_base_hand_s
+  #   pid: {p: 0.0, i: 0.0, d: 0.0}
+  l_hand_rod_a_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: l_hand_rod_a
+    pid: {p: 100.0, i: 0.0, d: 10.0}
+  # r_hand_rod_b_position_controller:
+  #   type: effort_controllers/JointPositionController
+  #   joint: r_hand_rod_b
+  #   pid: {p: 0.0, i: 0.0, d: 0.0}
+  l_finger_roll_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: l_finger_roll
+    pid: {p: 10.0, i: 0.0, d: 1.0}
+  # l_rod_a_finger_position_controller:
+  #   type: effort_controllers/JointPositionController
+  #   joint: l_rod_a_finger
+  #   pid: {p: 100.0, i: 0.01, d: 10.0}
+  # l_hand_rod_b_position_controller:
+  #   type: effort_controllers/JointPositionController
+  #   joint: l_hand_rod_b
+  #   pid: {p: 100.0, i: 0.01, d: 10.0}
+  # r_base_hand_s_position_controller:
+  #   type: effort_controllers/JointPositionController
+  #   joint: r_base_hand_s
+  #   pid: {p: 0.0, i: 0.0, d: 0.0}

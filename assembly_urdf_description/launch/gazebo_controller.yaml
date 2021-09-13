@@ -1,0 +1,20 @@
+gazebo_ros_control:
+  pid_gains:
+    r_hand_rod_a:
+      p: 0.0
+      i: 0.0
+      d: 0.0
+      antiwindup: true
+      publish_state: true
+    r_rod_a_finger:
+      p: 0.0
+      i: 0.0
+      d: 0.0
+      antiwindup: true
+      publish_state: true
+    r_hand_rod_b:
+      p: 0.0
+      i: 0.0
+      d: 0.0
+      antiwindup: true
+      publish_state: true
