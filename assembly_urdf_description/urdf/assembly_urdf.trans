@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<robot name="assembly_urdf"
+<robot name="cobotta"
   xmlns:xacro="http://www.ros.org/wiki/xacro">
 
   <transmission name="r_hand_rod_a_tran">
