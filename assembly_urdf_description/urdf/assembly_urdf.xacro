@@ -28,14 +28,22 @@
     </ode>
   </physics>
 
-  <link name="world">
+  <!-- Connect J6(EoE of Cobotta) to the base link of gripper-->
+
+  <joint name="joint_gripper_base" type="fixed">
+		<parent link="J6"/>
+		<child link="gripper_base"/>
+		<origin rpy="0.000000 0.000000 0.000000" xyz="0.000000 0.000000 0.0000000"/>
+	</joint>
+
+  <!-- <link name="world">
   </link>
   <joint name="base_fixed_joint" type="fixed">
     <parent link="world"/>
     <child link="base_link"/>
-  </joint>
+  </joint> -->
 
-  <link name="base_link">
+  <link name="gripper_base_link">
     <xacro:inertia_macro radius="0.0702" height="0.1749" mass="${0.2458664564570096*hand_stiffness}">
       <origin rpy="0 0 0" xyz="0.007413303848346014 0.06187243424866449 0.052543473427993696"/>
     </xacro:inertia_macro>
@@ -340,7 +348,7 @@
 
   <joint name="r_base_hand_r" type="revolute">
     <origin rpy="0 0 0" xyz="0.014852 0.047596 0.080135"/>
-    <parent link="base_link"/>
+    <parent link="gripper_base_link"/>
     <child link="r_pinion_1"/>
     <axis xyz="0.0 0.0 1.0"/>
     <limit velocity="${pi*0.25}" effort="10.6" lower="${-pi*3.0}" upper="${0.0}" />
@@ -351,7 +359,7 @@
 
   <joint name="l_base_hand_r" type="revolute">
     <origin rpy="0 0 0" xyz="0.014952 0.076096 0.080135"/>
-    <parent link="base_link"/>
+    <parent link="gripper_base_link"/>
     <child link="l_pinion_1"/>
     <axis xyz="0.0 0.0 1.0"/>
     <limit velocity="${pi*0.25}" effort="10.6" lower="${0.0}" upper="${pi*3.0}" />
@@ -361,7 +369,7 @@
 
   <joint name="l_base_hand_s" type="prismatic">
     <origin rpy="0 0 0" xyz="-0.095795 0.076986 0.041735"/>
-    <parent link="base_link"/>
+    <parent link="gripper_base_link"/>
     <child link="l_hand_1"/>
     <axis xyz="0.999994 -0.00352 -0.0"/>
     <limit effort="10" lower="-9.0" upper="1.0" velocity="${pi*0.5}"/>
@@ -428,7 +436,7 @@
 
   <joint name="r_base_hand_s" type="prismatic">
     <origin rpy="0 0 0" xyz="-0.050899 0.047328 0.041735"/>
-    <parent link="base_link"/>
+    <parent link="gripper_base_link"/>
     <child link="r_hand_1"/>
     <axis xyz="0.999994 -0.00352 -0.0"/>
     <limit effort="10" lower="-9.0" upper="1.0" velocity="${pi*0.5}"/>
