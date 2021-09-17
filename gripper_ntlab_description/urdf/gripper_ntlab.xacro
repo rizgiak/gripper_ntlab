@@ -9,9 +9,9 @@
   <!--regarding there are some objects that has no inertia value-->
   <xacro:property name="hand_stiffness" value="10" />
 
-  <xacro:include filename="$(find assembly_urdf_description)/urdf/materials.xacro" />
-  <xacro:include filename="$(find assembly_urdf_description)/urdf/assembly_urdf.trans" />
-  <xacro:include filename="$(find assembly_urdf_description)/urdf/assembly_urdf.gazebo" />
+  <xacro:include filename="$(find gripper_ntlab_description)/urdf/materials.xacro" />
+  <xacro:include filename="$(find gripper_ntlab_description)/urdf/gripper_ntlab.trans" />
+  <xacro:include filename="$(find gripper_ntlab_description)/urdf/gripper_ntlab.gazebo" />
 
   <xacro:macro name="inertia_macro" params="radius height mass *origin">
     <inertial>
@@ -55,14 +55,14 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://assembly_urdf_description/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://gripper_ntlab_description/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="silver_default"/>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://assembly_urdf_description/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://gripper_ntlab_description/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -74,14 +74,14 @@
     <visual>
       <origin rpy="0 0 0" xyz="0.0377 -0.047281 -0.081235"/>
       <geometry>
-        <mesh filename="package://assembly_urdf_description/meshes/r_rod_a_1.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://gripper_ntlab_description/meshes/r_rod_a_1.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="silver_default"/>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0.0377 -0.047281 -0.081235"/>
       <geometry>
-        <mesh filename="package://assembly_urdf_description/meshes/r_rod_a_1.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://gripper_ntlab_description/meshes/r_rod_a_1.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -95,14 +95,14 @@
     <visual>
       <origin rpy="0 0 0" xyz="0.111195 -0.015682 -0.096135"/>
       <geometry>
-        <mesh filename="package://assembly_urdf_description/meshes/r_finger_1.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://gripper_ntlab_description/meshes/r_finger_1.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="silver_default"/>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0.111195 -0.015682 -0.096135"/>
       <geometry>
-        <mesh filename="package://assembly_urdf_description/meshes/r_finger_1.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://gripper_ntlab_description/meshes/r_finger_1.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -116,14 +116,14 @@
     <visual>
       <origin rpy="0 0 0" xyz="0.172173 -0.021897 -0.092985"/>
       <geometry>
-        <mesh filename="package://assembly_urdf_description/meshes/r_roll_1.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://gripper_ntlab_description/meshes/r_roll_1.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="silver_default"/>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0.172173 -0.021897 -0.092985"/>
       <geometry>
-        <mesh filename="package://assembly_urdf_description/meshes/r_roll_1.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://gripper_ntlab_description/meshes/r_roll_1.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -137,14 +137,14 @@
     <visual>
       <origin rpy="0 0 0" xyz="-0.014852 -0.047596 -0.080135"/>
       <geometry>
-        <mesh filename="package://assembly_urdf_description/meshes/r_pinion_1.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://gripper_ntlab_description/meshes/r_pinion_1.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="silver_default"/>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="-0.014852 -0.047596 -0.080135"/>
       <geometry>
-        <mesh filename="package://assembly_urdf_description/meshes/r_pinion_1.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://gripper_ntlab_description/meshes/r_pinion_1.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -158,14 +158,14 @@
     <visual>
       <origin rpy="0 0 0" xyz="-0.014952 -0.076096 -0.080135"/>
       <geometry>
-        <mesh filename="package://assembly_urdf_description/meshes/l_pinion_1.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://gripper_ntlab_description/meshes/l_pinion_1.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="silver_default"/>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="-0.014952 -0.076096 -0.080135"/>
       <geometry>
-        <mesh filename="package://assembly_urdf_description/meshes/l_pinion_1.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://gripper_ntlab_description/meshes/l_pinion_1.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -179,14 +179,14 @@
     <visual>
       <origin rpy="0 0 0" xyz="0.095795 -0.076986 -0.041735"/>
       <geometry>
-        <mesh filename="package://assembly_urdf_description/meshes/l_hand_1.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://gripper_ntlab_description/meshes/l_hand_1.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="silver_default"/>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0.095795 -0.076986 -0.041735"/>
       <geometry>
-        <mesh filename="package://assembly_urdf_description/meshes/l_hand_1.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://gripper_ntlab_description/meshes/l_hand_1.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -198,14 +198,14 @@
     <visual>
       <origin rpy="0 0 0" xyz="0.036595 -0.076777 -0.08431"/>
       <geometry>
-        <mesh filename="package://assembly_urdf_description/meshes/l_rod_a_1.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://gripper_ntlab_description/meshes/l_rod_a_1.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="abs_white"/>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0.036595 -0.076777 -0.08431"/>
       <geometry>
-        <mesh filename="package://assembly_urdf_description/meshes/l_rod_a_1.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://gripper_ntlab_description/meshes/l_rod_a_1.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -217,14 +217,14 @@
     <visual>
       <origin rpy="0 0 0" xyz="0.029748 -0.033397 -0.101735"/>
       <geometry>
-        <mesh filename="package://assembly_urdf_description/meshes/r_rod_b_1.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://gripper_ntlab_description/meshes/r_rod_b_1.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="silver_default"/>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0.029748 -0.033397 -0.101735"/>
       <geometry>
-        <mesh filename="package://assembly_urdf_description/meshes/r_rod_b_1.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://gripper_ntlab_description/meshes/r_rod_b_1.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -238,14 +238,14 @@
     <visual>
       <origin rpy="0 0 0" xyz="0.169963 -0.09995 -0.09331"/>
       <geometry>
-        <mesh filename="package://assembly_urdf_description/meshes/l_roll_1.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://gripper_ntlab_description/meshes/l_roll_1.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="silver_default"/>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0.169963 -0.09995 -0.09331"/>
       <geometry>
-        <mesh filename="package://assembly_urdf_description/meshes/l_roll_1.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://gripper_ntlab_description/meshes/l_roll_1.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -259,14 +259,14 @@
     <visual>
       <origin rpy="0 0 0" xyz="0.110234 -0.10804 -0.08456"/>
       <geometry>
-        <mesh filename="package://assembly_urdf_description/meshes/l_finger_1.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://gripper_ntlab_description/meshes/l_finger_1.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="silver_default"/>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0.110234 -0.10804 -0.08456"/>
       <geometry>
-        <mesh filename="package://assembly_urdf_description/meshes/l_finger_1.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://gripper_ntlab_description/meshes/l_finger_1.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -278,14 +278,14 @@
     <visual>
       <origin rpy="0 0 0" xyz="0.028547 -0.090606 -0.089835"/>
       <geometry>
-        <mesh filename="package://assembly_urdf_description/meshes/l_rod_b_1.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://gripper_ntlab_description/meshes/l_rod_b_1.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="silver_default"/>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0.028547 -0.090606 -0.089835"/>
       <geometry>
-        <mesh filename="package://assembly_urdf_description/meshes/l_rod_b_1.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://gripper_ntlab_description/meshes/l_rod_b_1.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -299,14 +299,14 @@
     <visual>
       <origin rpy="0 0 0" xyz="0.050899 -0.047328 -0.041735"/>
       <geometry>
-        <mesh filename="package://assembly_urdf_description/meshes/r_hand_1.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://gripper_ntlab_description/meshes/r_hand_1.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="silver_default"/>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0.050899 -0.047328 -0.041735"/>
       <geometry>
-        <mesh filename="package://assembly_urdf_description/meshes/r_hand_1.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://gripper_ntlab_description/meshes/r_hand_1.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>

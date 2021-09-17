@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>assembly_urdf_description</name>
+  <name>gripper_ntlab_description</name>
   <version>0.0.0</version>
-<description>The assembly_urdf_description package</description>
+<description>The gripper_ntlab_description package</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag -->
   <!-- Example:  -->
   <!-- <maintainer email="jane.doe@example.com">Jane Doe</maintainer> -->
-  <maintainer email="syuntoku14@todo.todo">syuntoku14</maintainer>
+  <maintainer email="auliakhilmirizgi@gmail.com">rizgiak</maintainer>
 
 
   <!-- One license tag required, multiple allowed, one license per tag -->
