@@ -2,6 +2,9 @@
 <robot name="cobotta"
   xmlns:xacro="http://www.ros.org/wiki/xacro">
 
+  <xacro:arg name="base_type" default="none"/>
+  <xacro:property name="base_type" value="$(arg base_type)" />
+
   <xacro:property name="joint_damping" value="0.001" />
   <xacro:property name="joint_friction" value="0.61" />
 
@@ -29,19 +32,22 @@
   </physics>
 
   <!-- Connect J6(EoE of Cobotta) to the base link of gripper-->
+  <xacro:if value="${base_type == 'cobotta'}">
+    <joint name="joint_gripper_base" type="fixed">
+      <parent link="J6"/>
+      <child link="gripper_base_link"/>
+      <origin rpy="0.000000 1.5708 -1.5708" xyz="-0.060000 0.060000 0.0650000"/>
+    </joint>
+  </xacro:if>
 
-  <joint name="joint_gripper_base" type="fixed">
-		<parent link="J6"/>
-		<child link="gripper_base_link"/>
-		<origin rpy="0.000000 1.5708 -1.5708" xyz="-0.060000 0.060000 0.0650000"/>
-	</joint>
-
-  <!-- <link name="world">
-  </link>
-  <joint name="base_fixed_joint" type="fixed">
-    <parent link="world"/>
-    <child link="base_link"/>
-  </joint> -->
+  <xacro:if value="${base_type == 'none'}">
+    <link name="base_link">
+    </link>
+    <joint name="base_fixed_joint" type="fixed">
+      <parent link="base_link"/>
+      <child link="gripper_base_link"/>
+    </joint>
+  </xacro:if>
 
   <link name="gripper_base_link">
     <xacro:inertia_macro radius="0.0702" height="0.1749" mass="${0.2458664564570096*hand_stiffness}">
