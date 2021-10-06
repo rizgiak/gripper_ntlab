@@ -153,7 +153,7 @@ include_directories(
 
 include_directories(${THIS_PACKAGE_INCLUDE_DIRS} ${catkin_INCLUDE_DIRS} ${Boost_INCLUDE_DIR})
 
-add_library(gripper_ntlab_controller
+add_executable(gripper_ntlab_controller 
   src/gripper_ntlab_controller.cpp
 )
 target_link_libraries(gripper_ntlab_controller
@@ -162,7 +162,9 @@ target_link_libraries(gripper_ntlab_controller
 add_dependencies(gripper_ntlab_controller gripper_ntlab_controller_gencpp)
 
 install(TARGETS gripper_ntlab_controller
+  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
 add_executable(move_gripper src/move_gripper.cpp)
