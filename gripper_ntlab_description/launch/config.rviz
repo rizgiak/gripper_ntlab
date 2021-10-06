@@ -6,10 +6,7 @@ Panels:
       Expanded:
         - /Global Options1
         - /Axes1
-        - /RobotModel1/Status1
-        - /RobotModel1/Links1/gripper_base_link1/Orientation1
         - /RobotState1
-        - /RobotState1/Status1
       Splitter Ratio: 0.5
     Tree Height: 795
   - Class: rviz/Selection
@@ -67,87 +64,18 @@ Visualization Manager:
     - Alpha: 1
       Class: rviz/RobotModel
       Collision Enabled: false
-      Enabled: true
+      Enabled: false
       Links:
         All Links Enabled: true
         Expand Joint Details: false
         Expand Link Details: false
         Expand Tree: false
         Link Tree Style: ""
-        base_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        gripper_base_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        l_finger_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        l_hand_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        l_pinion_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        l_rod_a_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        l_rod_b_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        l_roll_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        r_finger_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        r_hand_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        r_pinion_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        r_rod_a_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        r_rod_b_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        r_roll_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
       Name: RobotModel
       Robot Description: robot_description
       TF Prefix: ""
       Update Interval: 0
-      Value: true
+      Value: false
       Visual Enabled: true
     - Attached Body Color: 150; 50; 150
       Class: moveit_rviz_plugin/RobotState
@@ -231,7 +159,7 @@ Visualization Manager:
       Name: RobotState
       Robot Alpha: 1
       Robot Description: robot_description
-      Robot State Topic: /gripper_ntlab/JointState
+      Robot State Topic: gripper_ntlab/display_robot_state
       Show All Links: true
       Show Highlights: true
       Value: true
@@ -264,7 +192,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 0.5144429206848145
+      Distance: 0.4670478403568268
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -272,17 +200,17 @@ Visualization Manager:
         Value: false
       Field of View: 0.7853981852531433
       Focal Point:
-        X: -0.022882355377078056
-        Y: 0.05308004841208458
-        Z: 0.08481836318969727
+        X: -0.008824270218610764
+        Y: 0.0965084508061409
+        Z: 0.13930988311767578
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 1.055396556854248
+      Pitch: 1.5347963571548462
       Target Frame: <Fixed Frame>
-      Yaw: 3.3985795974731445
+      Yaw: 6.183586120605469
     Saved: ~
 Window Geometry:
   Displays:
