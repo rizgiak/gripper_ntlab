@@ -167,6 +167,16 @@ install(TARGETS gripper_ntlab_controller
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
+add_executable(cobotta_gripper_ntlab_controller src/cobotta_gripper_ntlab_controller.cpp)
+target_link_libraries(cobotta_gripper_ntlab_controller ${catkin_LIBRARIES})
+add_dependencies(cobotta_gripper_ntlab_controller ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+
+install(TARGETS cobotta_gripper_ntlab_controller
+  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+
 add_executable(move_gripper src/move_gripper.cpp)
 target_link_libraries(move_gripper ${catkin_LIBRARIES})
 add_dependencies(move_gripper ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
