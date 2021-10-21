@@ -4,5 +4,5 @@
         <param name="baud" type="int" value="115200"/>
     </node>
 
-    <node name="cobotta_gripper_ntlab_controller" pkg="gripper_ntlab_controller" type="cobotta_gripper_ntlab_controller"/>
+    <node name="cobotta_gripper_ntlab_controller" pkg="gripper_ntlab_controller" type="cobotta_gripper_ntlab_controller" output="screen"/>
 </launch>
