@@ -36,7 +36,7 @@
     <joint name="joint_gripper_base" type="fixed">
       <parent link="J6"/>
       <child link="gripper_base_link"/>
-      <origin rpy="0.000000 1.5708 -1.5708" xyz="-0.060000 0.060000 0.0650000"/>
+      <origin rpy="0.000000 1.5708 -1.5708" xyz="-0.060000 0.060000 0.1350000"/>
     </joint>
   </xacro:if>
 
