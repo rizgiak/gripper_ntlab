@@ -3,7 +3,6 @@
 #include <gripper_ntlab_controller/CartesianPosition.h>
 #include <gripper_ntlab_controller/JointPosition.h>
 #include <math.h>
-#include <std_msgs/Float64MultiArray.h>
 #include <std_msgs/Int8.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -28,14 +27,13 @@
 
 using namespace std;
 
-std::vector<double> position;
-double _x1, _y1, _theta1, _x2, _y2, _theta2;
-
 const int DOF = 5;
 bool set_position_flag = false;
+int message_buffer = 0;
 
 sensor_msgs::JointState gripper_joint_state, cobotta_joint_state, joint_states;
-gripper_ntlab_controller::JointPosition gripper_joint_position;
+gripper_ntlab_controller::JointPosition gripper_joint_position;  // to set each joint in microcontroller (arduino)
+gripper_ntlab_controller::CartesianPosition gripper_cartesian_position;
 
 double deg2rad(double degree) {
     return degree * (PI / 180);
@@ -95,15 +93,17 @@ double calculateL1(double theta, double x) {
 }
 // -------------------------------------------------------------------------------------
 
-const double limit_x1[2] = {0.148468, 0.277883};
+const double limit_x1[2] = {0.148568, 0.277883};
 const double limit_y1[2] = {-0.0809314, 0.032026};
-const double limit_x2[2] = {0.150381, 0.266819};
+const double limit_x2[2] = {0.148568, 0.266819};
 const double limit_y2[2] = {-0.0308677, 0.0821627};
 
 std::vector<double> motor_last_position = {0, 0, 0, 0, 0};
-std::vector<double> calculateCartesian(double x1, double y1, double x2, double y2, double rad) {
+std::vector<double> calculateJointPulse(double x1, double y1, double x2, double y2, double rad) {
     std::vector<double> motor(5);
     ROS_INFO_STREAM("Position: " << x1 << ", " << y1 << ", " << x2 << ", " << y2 << ", " << rad);
+
+    // Limit position to prevent collision
     if (x1 > limit_x1[0] && x1 < limit_x1[1] &&
         y1 > limit_y1[0] && y1 < limit_y1[1] &&
         x2 > limit_x2[0] && x2 < limit_x2[1] &&
@@ -140,17 +140,18 @@ std::vector<double> calculateCartesian(double x1, double y1, double x2, double y
     return motor;
 }
 
-void gripperSetCartesianSubCallback(const gripper_ntlab_controller::CartesianPosition::ConstPtr& msg) {
+void gripperSetCartesianPositionSubCallback(const gripper_ntlab_controller::CartesianPosition::ConstPtr& msg) {
     gripper_ntlab_controller::JointPosition joint_position;
-    joint_position.mode = 101; // mode set position
-    vector<double> position = calculateCartesian(msg->x1, msg->y1, msg->x2, msg->y2, msg->rad);
+    joint_position.mode = 101;  // mode set position
+    vector<double> position = calculateJointPulse(msg->x1, msg->y1, msg->x2, msg->y2, msg->rad);
     ROS_INFO_STREAM("Pulse: " << position[0] << ", " << position[1] << ", " << position[2] << ", " << position[3] << ", " << position[4]);
     joint_position.position = position;
     gripper_joint_position = joint_position;
+    message_buffer = msg->buffer;
     set_position_flag = msg->torque;
 }
 
-void gripperSetPositionSubCallback(const gripper_ntlab_controller::JointPosition::ConstPtr& msg) {
+void gripperSetJointPositionSubCallback(const gripper_ntlab_controller::JointPosition::ConstPtr& msg) {
     gripper_ntlab_controller::JointPosition joint_position;
     joint_position.mode = msg->mode;
     for (int i = 0; i < 2; i++) {
@@ -221,27 +222,28 @@ void gripperJointSubCallback(const sensor_msgs::JointState::ConstPtr& msg) {
     gripper_joint_state = joint_state_msg;
 
     // Calculate forward kinematics --------------------------------------------------------------
-    position.clear();
+    double x1, y1, theta1, x2, y2, theta2, rad;
     // left hand
-    _theta1 = (pulse2rad(msg->position[2] + xacro_offset[2]) + kinematic_offset[2]);
-    _y1 = calculateY(_theta1, 1);
-    _x1 = calculateX(pulse2pos(msg->position[0] + xacro_offset[0]) * -direction[0], _theta1);
-    _theta1 = rad2deg(_theta1);
+    theta1 = (pulse2rad(msg->position[2] + xacro_offset[2]) + kinematic_offset[2]);
+    y1 = calculateY(theta1, 1);
+    x1 = calculateX(pulse2pos(msg->position[0] + xacro_offset[0]) * -direction[0], theta1);
+    theta1 = rad2deg(theta1);
 
     // right hand
-    _theta2 = (pulse2rad(msg->position[3] + xacro_offset[3]) + kinematic_offset[3]);
-    _y2 = calculateY(_theta2, -1);
-    _x2 = calculateX(pulse2pos(msg->position[1] + xacro_offset[1]) * -direction[1], _theta2);
-    _theta2 = rad2deg(_theta2);
+    theta2 = (pulse2rad(msg->position[3] + xacro_offset[3]) + kinematic_offset[3]);
+    y2 = calculateY(theta2, -1);
+    x2 = calculateX(pulse2pos(msg->position[1] + xacro_offset[1]) * -direction[1], theta2);
+    theta2 = rad2deg(theta2);
+
+    rad = pulse2rad(msg->position[4]);
     // -------------------------------------------------------------------------------------------
 
-    // set
-    position.push_back(_x1);
-    position.push_back(_y1);
-    position.push_back(_theta1);
-    position.push_back(_x2);
-    position.push_back(_y2);
-    position.push_back(_theta2);
+    // set gripper current position in cartesian space
+    gripper_cartesian_position.x1 = x1;
+    gripper_cartesian_position.y1 = y1;
+    gripper_cartesian_position.x2 = x2;
+    gripper_cartesian_position.y2 = y2;
+    gripper_cartesian_position.rad = rad;
 }
 
 void cobottaJointSubCallback(const sensor_msgs::JointState::ConstPtr& msg) {
@@ -282,24 +284,21 @@ int main(int argc, char** argv) {
 
     ros::Publisher joint_pub = n.advertise<sensor_msgs::JointState>("cobotta/all_joint_states", 10);
     ros::Publisher gripper_pub = n.advertise<gripper_ntlab_controller::JointPosition>("gripper_ntlab/set_position", 10);
-    ros::Publisher gripper_cartesian_pub = n.advertise<std_msgs::Float64MultiArray>("gripper_ntlab/cartesian_position", 10);
+    ros::Publisher gripper_cartesian_pub = n.advertise<gripper_ntlab_controller::CartesianPosition>("gripper_ntlab/cartesian_position", 10);
 
-    ros::Subscriber hand_set_cartesian_sub = n.subscribe("cobotta/hand_set_cartesian", 10, gripperSetCartesianSubCallback);
-    ros::Subscriber hand_set_position_sub = n.subscribe("cobotta/hand_set_position", 10, gripperSetPositionSubCallback);
+    ros::Subscriber hand_set_cartesian_sub = n.subscribe("cobotta/hand_set_cartesian", 10, gripperSetCartesianPositionSubCallback);
+    ros::Subscriber hand_set_joint_sub = n.subscribe("cobotta/hand_set_joint", 10, gripperSetJointPositionSubCallback);
     ros::Subscriber gripper_sub = n.subscribe("gripper_ntlab/joint_states", 10, gripperJointSubCallback);
     ros::Subscriber cobotta_sub = n.subscribe("cobotta/joint_states", 10, cobottaJointSubCallback);
 
-    std_msgs::Float64MultiArray position_msg;
-
     ros::Rate rate(100);
     while (ros::ok()) {
-        position_msg.data = position;
-        gripper_cartesian_pub.publish(position_msg);
+        gripper_cartesian_pub.publish(gripper_cartesian_position);
 
-        // ROS_INFO_STREAM("x1:" << _x1 << ",\t y1:" << _y1 << ",\t theta1:" << _theta1 << ",\t x2:" << _x2 << ",\t y2:" << _y2 << ",\t theta2:" << _theta2);
-        //  ROS_INFO_STREAM("m0:" << motor[0] << ", m1:" << motor[1] << ", m2:" << motor[2] << ", m3:" << motor[3] << ", m4:" << motor[4]);
         if (set_position_flag) {
-            gripper_pub.publish(gripper_joint_position);
+            for (int i = 0; i < message_buffer + 1; i++) {
+                gripper_pub.publish(gripper_joint_position);
+            }
             set_position_flag = false;
         }
         combineJointState();
