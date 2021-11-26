@@ -21,8 +21,8 @@
 
 #define L0 0.016
 #define L1 0.055
-#define L2 0.083
-#define L3 0.065
+#define L2 0.081
+#define L3 0.130
 #define L4 0.013
 
 using namespace std;
@@ -61,7 +61,7 @@ double rad2pulse(double radian) {
     return rad2deg(radian) * 4096 / 360;
 }
 
-const int direction[DOF] = {-1, 1, 1, -1, 1};                             // direction of movement in rviz
+const int direction[DOF] = {1, -1, 1, -1, 1};                             // direction of movement in rviz
 const int xacro_offset[DOF] = {0, 0, -550, 550};                          // offset to adjust visualization in rviz
 const int mimic_direction[7] = {1, -1, 1, -1, 1, -1, -1};                 // direction for mimic joint
 const double kinematic_offset[DOF] = {0, 0, -0.381961, 0.4356498893, 0};  // offset of initial position regarding 0 degree is in home position
@@ -93,10 +93,10 @@ double calculateL1(double theta, double x) {
 }
 // -------------------------------------------------------------------------------------
 
-const double limit_x1[2] = {0.148568, 0.277883};
-const double limit_y1[2] = {-0.0809314, 0.032026};
-const double limit_x2[2] = {0.148568, 0.266819};
-const double limit_y2[2] = {-0.0308677, 0.0821627};
+const double limit_x1[2] = {0.265, 0.312};
+const double limit_y1[2] = {-0.0709314, 0.02};
+const double limit_x2[2] = {0.265, 0.312};
+const double limit_y2[2] = {-0.02, 0.0721627};
 
 std::vector<double> motor_last_position = {0, 0, 0, 0, 0};
 std::vector<double> calculateJointPulse(double x1, double y1, double x2, double y2, double rad) {
@@ -111,7 +111,7 @@ std::vector<double> calculateJointPulse(double x1, double y1, double x2, double 
         double theta = calculateTheta(y1, -1);
         double l1 = calculateL1(theta, x1);
         if (l1 >= 0) {
-            motor[0] = (int)pos2pulse(l1) * 1;         // motor direction
+            motor[0] = (int)pos2pulse(l1) * -1;         // motor direction
             motor[2] = (int)rad2pulse(theta + 1.228);  // offset homing position to straight down
         } else {
             motor[0] = motor_last_position[0];
@@ -122,7 +122,7 @@ std::vector<double> calculateJointPulse(double x1, double y1, double x2, double 
         theta = calculateTheta(y2, 1);
         l1 = calculateL1(theta, x2);
         if (l1 >= 0) {
-            motor[1] = (int)pos2pulse(l1) * -1;       // motor direction
+            motor[1] = (int)pos2pulse(l1) * 1;       // motor direction
             motor[3] = (int)rad2pulse(theta - 1.28);  // offset homing position to straight down
         } else {
             motor[1] = motor_last_position[1];
