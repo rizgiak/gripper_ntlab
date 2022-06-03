@@ -22,7 +22,7 @@
 #define L0 0.016
 #define L1 0.055
 #define L2 0.081
-#define L3 0.130
+#define L3 0.088
 #define L4 0.013
 
 using namespace std;
@@ -93,10 +93,10 @@ double calculateL1(double theta, double x) {
 }
 // -------------------------------------------------------------------------------------
 
-const double limit_x1[2] = {0.265, 0.312};
-const double limit_y1[2] = {-0.0709314, 0.02};
-const double limit_x2[2] = {0.265, 0.312};
-const double limit_y2[2] = {-0.02, 0.0721627};
+const double limit_x1[2] = {0.223, 0.27};
+const double limit_y1[2] = {-0.075, 0.02};
+const double limit_x2[2] = {0.223, 0.27};
+const double limit_y2[2] = {-0.02, 0.075};
 
 std::vector<double> motor_last_position = {0, 0, 0, 0, 0};
 std::vector<double> calculateJointPulse(double x1, double y1, double x2, double y2, double rad) {

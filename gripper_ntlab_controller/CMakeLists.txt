@@ -118,9 +118,9 @@ include_directories(
 )
 
 ## Declare a C++ library
-# add_library(${PROJECT_NAME}
-#   src/${PROJECT_NAME}/gripper-launch.cpp
-# )
+add_library(gripper_ntlab_controller 
+  src/gripper_ntlab_controller.cpp
+)
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
@@ -153,19 +153,19 @@ include_directories(
 
 include_directories(${THIS_PACKAGE_INCLUDE_DIRS} ${catkin_INCLUDE_DIRS} ${Boost_INCLUDE_DIR})
 
-add_executable(gripper_ntlab_controller 
-  src/gripper_ntlab_controller.cpp
-)
-target_link_libraries(gripper_ntlab_controller
-  ${catkin_LIBRARIES}
-)
-add_dependencies(gripper_ntlab_controller gripper_ntlab_controller_gencpp)
+# add_executable(gripper_ntlab_controller 
+#   src/gripper_ntlab_controller.cpp
+# )
+# target_link_libraries(gripper_ntlab_controller
+#   ${catkin_LIBRARIES}
+# )
+# add_dependencies(gripper_ntlab_controller gripper_ntlab_controller_gencpp)
 
-install(TARGETS gripper_ntlab_controller
-  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-)
+# install(TARGETS gripper_ntlab_controller
+#   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+#   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+#   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+# )
 
 add_executable(cobotta_gripper_ntlab_controller src/cobotta_gripper_ntlab_controller.cpp)
 target_link_libraries(cobotta_gripper_ntlab_controller ${catkin_LIBRARIES})
