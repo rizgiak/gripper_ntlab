@@ -12,5 +12,6 @@ catkin_package()
 catkin_install_python(
 	PROGRAMS
 	  scripts/fs_read_node
+    scripts/cop_calculate_node
     DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )

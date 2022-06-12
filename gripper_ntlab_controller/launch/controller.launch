@@ -1,0 +1,29 @@
+<launch>
+    <arg name="baud" default="460800" />
+    <arg name="fs1" default="/dev/ttyUSB0" />
+    <arg name="fs2" default="/dev/ttyUSB1" />
+    <arg name="fs3" default="/dev/ttyUSB2" />
+    <arg name="filtered" default="True" />
+
+    <node name="fs_read_node_l1" type="fs_read_node" pkg="gripper_ntlab_sensor" output="screen">
+        <param name="port" type="string" value="$(arg fs1)"/>
+        <param name="baud" type="int" value="$(arg baud)" />
+        <param name="topic_name" type="string" value="/fs1" />
+        <param name="filtered" type="bool" value="$(arg filtered)" />
+    </node>
+    <node name="fs_read_node_l2" type="fs_read_node" pkg="gripper_ntlab_sensor" output="screen">
+        <param name="port" type="string" value="$(arg fs2)"/>
+        <param name="baud" type="int" value="$(arg baud)" />
+        <param name="topic_name" type="string" value="/fs2" />
+        <param name="filtered" type="bool" value="$(arg filtered)" />
+    </node>
+    <node name="fs_read_node_l3" type="fs_read_node" pkg="gripper_ntlab_sensor" output="screen">
+        <param name="port" type="string" value="$(arg fs3)"/>
+        <param name="baud" type="int" value="$(arg baud)" />
+        <param name="topic_name" type="string" value="/fs3" />
+        <param name="filtered" type="bool" value="$(arg filtered)" />
+    </node>
+
+    <node name="cop_calculate_node" type="cop_calculate_node" pkg="gripper_ntlab_sensor" output="screen"/>
+
+</launch>
