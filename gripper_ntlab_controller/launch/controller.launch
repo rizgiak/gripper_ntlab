@@ -1,13 +1,22 @@
 <launch>
     <arg name="baud" default="460800" />
-    <arg name="fs1" default="/dev/ttyUSB1" />
-    <arg name="fs2" default="/dev/ttyUSB2" />
-    <arg name="fs3" default="/dev/ttyUSB0" />
-    <arg name="filtered" default="True" />
-    <arg name="hpf_threshold" default="0.01" />
 
+    <!-- Left -->
+    <arg name="fs1_port" default="/dev/ttyUSB0" />
+    <arg name="fs2_port" default="/dev/ttyUSB2" />
+    <arg name="fs3_port" default="/dev/ttyUSB1" />
+
+    <!-- Right -->
+    <arg name="fs4_port" default="/dev/ttyUSB3" />
+    <arg name="fs5_port" default="/dev/ttyUSB4" />
+    <arg name="fs6_port" default="/dev/ttyUSB5" />
+
+    <arg name="filtered" default="True" />
+    <arg name="hpf_threshold" default="0.01" /> <!-- threshold to pass data higher than value -->
+
+    <!-- Left hand -->
     <node name="fs_read_node_l1" type="fs_read_node" pkg="gripper_ntlab_sensor" output="screen">
-        <param name="port" type="string" value="$(arg fs1)"/>
+        <param name="port" type="string" value="$(arg fs1_port)" />
         <param name="baud" type="int" value="$(arg baud)" />
         <param name="topic_name" type="string" value="/fs1" />
         <param name="topic_reset_name" type="string" value="/fs1_reset" />
@@ -15,7 +24,7 @@
         <param name="hpf_threshold" value="$(arg hpf_threshold)" />
     </node>
     <node name="fs_read_node_l2" type="fs_read_node" pkg="gripper_ntlab_sensor" output="screen">
-        <param name="port" type="string" value="$(arg fs2)"/>
+        <param name="port" type="string" value="$(arg fs2_port)" />
         <param name="baud" type="int" value="$(arg baud)" />
         <param name="topic_name" type="string" value="/fs2" />
         <param name="topic_reset_name" type="string" value="/fs2_reset" />
@@ -23,7 +32,7 @@
         <param name="hpf_threshold" value="$(arg hpf_threshold)" />
     </node>
     <node name="fs_read_node_l3" type="fs_read_node" pkg="gripper_ntlab_sensor" output="screen">
-        <param name="port" type="string" value="$(arg fs3)"/>
+        <param name="port" type="string" value="$(arg fs3_port)" />
         <param name="baud" type="int" value="$(arg baud)" />
         <param name="topic_name" type="string" value="/fs3" />
         <param name="topic_reset_name" type="string" value="/fs3_reset" />
@@ -31,6 +40,54 @@
         <param name="hpf_threshold" value="$(arg hpf_threshold)" />
     </node>
 
-    <node name="cop_calculate_node" type="cop_calculate_node" pkg="gripper_ntlab_sensor" output="screen"/>
+    <!-- Right hand -->
+    <node name="fs_read_node_l4" type="fs_read_node" pkg="gripper_ntlab_sensor" output="screen">
+        <param name="port" type="string" value="$(arg fs4_port)"/>
+        <param name="baud" type="int" value="$(arg baud)" />
+        <param name="topic_name" type="string" value="/fs4" />
+        <param name="topic_reset_name" type="string" value="/fs4_reset" />
+        <param name="filtered" type="bool" value="$(arg filtered)" />
+        <param name="hpf_threshold" value="$(arg hpf_threshold)" />
+    </node>
+    <node name="fs_read_node_l5" type="fs_read_node" pkg="gripper_ntlab_sensor" output="screen">
+        <param name="port" type="string" value="$(arg fs5_port)"/>
+        <param name="baud" type="int" value="$(arg baud)" />
+        <param name="topic_name" type="string" value="/fs5" />
+        <param name="topic_reset_name" type="string" value="/fs5_reset" />
+        <param name="filtered" type="bool" value="$(arg filtered)" />
+        <param name="hpf_threshold" value="$(arg hpf_threshold)" />
+    </node>
+    <node name="fs_read_node_l6" type="fs_read_node" pkg="gripper_ntlab_sensor" output="screen">
+        <param name="port" type="string" value="$(arg fs6_port)"/>
+        <param name="baud" type="int" value="$(arg baud)" />
+        <param name="topic_name" type="string" value="/fs6" />
+        <param name="topic_reset_name" type="string" value="/fs6_reset" />
+        <param name="filtered" type="bool" value="$(arg filtered)" />
+        <param name="hpf_threshold" value="$(arg hpf_threshold)" />
+    </node>
+
+    <!-- Left -->
+    <node name="cop_calculate_left_node" type="cop_calculate_node" pkg="gripper_ntlab_sensor" output="screen">
+        <param name="title" type="string" value="COP Left Hand" />
+        <param name="fs1" type="string" value="/fs1" />
+        <param name="fs2" type="string" value="/fs2" />
+        <param name="fs3" type="string" value="/fs3" />
+        <param name="fs1_reset" type="string" value="/fs1_reset" />
+        <param name="fs2_reset" type="string" value="/fs2_reset" />
+        <param name="fs3_reset" type="string" value="/fs3_reset" />
+        <param name="cop_pub" type="string" value="/cop_left" />
+    </node>
+
+    <!-- Right -->
+    <node name="cop_calculate_right_node" type="cop_calculate_node" pkg="gripper_ntlab_sensor" output="screen">
+        <param name="title" type="string" value="COP Right Hand" />
+        <param name="fs1" type="string" value="/fs4" />
+        <param name="fs2" type="string" value="/fs5" />
+        <param name="fs3" type="string" value="/fs6" />
+        <param name="fs1_reset" type="string" value="/fs4_reset" />
+        <param name="fs2_reset" type="string" value="/fs5_reset" />
+        <param name="fs3_reset" type="string" value="/fs6_reset" />
+        <param name="cop_pub" type="string" value="/cop_right" />
+    </node>
 
 </launch>

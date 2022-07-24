@@ -1,0 +1,22 @@
+<launch>
+    <arg name="baud" default="460800" />
+    <arg name="fs1_port" default="/dev/ttyUSB0" />
+    <arg name="fs2_port" default="/dev/ttyUSB1" />
+    <arg name="fs3_port" default="/dev/ttyUSB2" />
+
+    <node name="fs_read_node1" type="fs_read_node" pkg="gripper_ntlab_sensor" output="screen">
+        <param name="mode" type="string" value="calibration" />
+        <param name="port" type="string" value="$(arg fs1_port)" />
+        <param name="baud" type="int" value="$(arg baud)" />
+    </node>
+    <node name="fs_read_node2" type="fs_read_node" pkg="gripper_ntlab_sensor" output="screen">
+        <param name="mode" type="string" value="calibration" />
+        <param name="port" type="string" value="$(arg fs2_port)" />
+        <param name="baud" type="int" value="$(arg baud)" />
+    </node>
+    <node name="fs_read_node3" type="fs_read_node" pkg="gripper_ntlab_sensor" output="screen">
+        <param name="mode" type="string" value="calibration" />
+        <param name="port" type="string" value="$(arg fs3_port)" />
+        <param name="baud" type="int" value="$(arg baud)" />
+    </node>
+</launch>

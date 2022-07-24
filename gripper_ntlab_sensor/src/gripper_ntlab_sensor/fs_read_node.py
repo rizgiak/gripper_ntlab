@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
+from queue import Empty
 import rospy
 import serial
 
-from std_msgs.msg import Float32, Bool
+from std_msgs.msg import Float32, Empty
 
 
 class FSReadNode:
@@ -12,9 +13,28 @@ class FSReadNode:
         _packet.append(0x58)
         _packet.append(0xD)
         _serial.write(_packet)
+
+    def fs_zero_calibration(self, _serial):
+        success = False
+        _packet = bytearray()
+        _packet.append(0x43)
+        _packet.append(0x41)
+        _packet.append(0xD)
+        _serial.write(_packet)
+
+        if _serial.read(4) == b'NA0\r':
+             success = True
+        return success
+    
+    def fs_reset(self, _serial):
+        _packet = bytearray()
+        _packet.append(0x43)
+        _packet.append(0x47)
+        _packet.append(0xD)
+        _serial.write(_packet)
     
     def fs_reset_callback(self, data):
-         self.reset_flag = data.data
+        self.fs_reset(self.ser)
 
     def read_sensor(self, _serial, _filtered):
         ret = 0
@@ -36,9 +56,6 @@ class FSReadNode:
                         ret = 0
                 else:
                     ret = raw_notation + raw_data
-                
-                if self.reset_flag: # set offset data to create initial offset
-                    self.offset = float(ret)
 
         return float(ret), success
 
@@ -47,21 +64,20 @@ class FSReadNode:
         rospy.init_node(node_name)
 
         # Param load
+        self.mode = rospy.get_param("~mode", "run")
         port = rospy.get_param("~port", "/dev/ttyUSB0")
         baud = rospy.get_param("~baud", 460800)
-        topic_name = rospy.get_param("~topic_name", "/fs1")
+        self.topic_name = rospy.get_param("~topic_name", "/fs1")
         topic_reset_name = rospy.get_param("~topic_reset_name", "/fs1_reset")
         self.filtered = rospy.get_param("~filtered", True)
         self.hpf_threshold = rospy.get_param("~hpf_threshold", 0.001)
 
         # Set publisher 
-        self.pub = rospy.Publisher(topic_name, Float32, queue_size=10)
+        self.pub = rospy.Publisher(self.topic_name, Float32, queue_size=10)
 
         # Set subscriber
-        self.sub = rospy.Subscriber(topic_reset_name, Bool, self.fs_reset_callback)
+        self.sub = rospy.Subscriber(topic_reset_name, Empty, self.fs_reset_callback)
 
-        self.offset = 0
-        self.reset_flag = False
         try:
             self.ser = serial.Serial(port, baud)
             self.init_fs_sensor(self.ser)
@@ -73,9 +89,13 @@ class FSReadNode:
         """
         Run the FSRead Node
         """
-
-        while not rospy.is_shutdown():
-            ret, success = self.read_sensor(self.ser, self.filtered)
-            ret = ret - self.offset
-            if success:
-                self.pub.publish(Float32(data=ret))
+        if self.mode == "calibration":
+            if(self.fs_zero_calibration(self.ser)):
+                print(self.topic_name + " calibration succeed.")
+            else:
+                print(self.topic_name + " calibration failed.")
+        elif self.mode == "run":
+            while not rospy.is_shutdown():
+                ret, success = self.read_sensor(self.ser, self.filtered)
+                if success:
+                    self.pub.publish(Float32(data=ret))

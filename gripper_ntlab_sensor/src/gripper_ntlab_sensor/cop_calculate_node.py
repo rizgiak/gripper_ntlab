@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
+from queue import Empty
 import rospy
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 
-from std_msgs.msg import Float32, Bool
+from std_msgs.msg import Float32, Empty
 from geometry_msgs.msg import Point32
 
 
@@ -44,30 +45,36 @@ class COPCalculateNode:
 
     def reset_sensor(self):
         rospy.sleep(2)
-        self.pub_fs1_reset.publish(data=True)
-        self.pub_fs2_reset.publish(data=True)
-        self.pub_fs3_reset.publish(data=True)
-        rospy.sleep(0.5)
-        self.pub_fs1_reset.publish(data=False)
-        self.pub_fs2_reset.publish(data=False)
-        self.pub_fs3_reset.publish(data=False)
+        self.pub_fs1_reset.publish()
+        self.pub_fs2_reset.publish()
+        self.pub_fs3_reset.publish()
 
     def __init__(self, node_name):
         print(node_name)
         rospy.init_node(node_name)
 
         # Param load
+        fs1 = rospy.get_param("~fs1", "/fs1")
+        fs2 = rospy.get_param("~fs2", "/fs2")
+        fs3 = rospy.get_param("~fs3", "/fs3")
+        fs1_reset = rospy.get_param("~fs1_reset", "/fs1_reset")
+        fs2_reset = rospy.get_param("~fs2_reset", "/fs2_reset")
+        fs3_reset = rospy.get_param("~fs3_reset", "/fs3_reset")
+        cop_pub = rospy.get_param("~cop_pub", "/cop")
+
+        self.title = rospy.get_param("~title", "Center of Pressure")
+
 
         # Set publisher
-        self.pub = rospy.Publisher("/cop", Point32, queue_size=10)
-        self.pub_fs1_reset = rospy.Publisher("/fs1_reset", Bool, queue_size=10)
-        self.pub_fs2_reset = rospy.Publisher("/fs2_reset", Bool, queue_size=10)
-        self.pub_fs3_reset = rospy.Publisher("/fs3_reset", Bool, queue_size=10)
+        self.pub = rospy.Publisher(cop_pub, Point32, queue_size=10)
+        self.pub_fs1_reset = rospy.Publisher(fs1_reset, Empty, queue_size=10)
+        self.pub_fs2_reset = rospy.Publisher(fs2_reset, Empty, queue_size=10)
+        self.pub_fs3_reset = rospy.Publisher(fs3_reset, Empty, queue_size=10)
 
         # Set subscriber
-        self.sub_fs1 = rospy.Subscriber("/fs1", Float32, self.fs1_callback)
-        self.sub_fs2 = rospy.Subscriber("/fs2", Float32, self.fs2_callback)
-        self.sub_fs3 = rospy.Subscriber("/fs3", Float32, self.fs3_callback)
+        self.sub_fs1 = rospy.Subscriber(fs1, Float32, self.fs1_callback)
+        self.sub_fs2 = rospy.Subscriber(fs2, Float32, self.fs2_callback)
+        self.sub_fs3 = rospy.Subscriber(fs3, Float32, self.fs3_callback)
 
         # Set init
 
@@ -91,7 +98,7 @@ class COPCalculateNode:
         plt.ion()
         plt.figure()
 
-        plt.title("Center of Pressure")
+        plt.title(self.title)
         plt.xlabel("x")
         plt.ylabel("y")
         plt.ylim(-19.5, 19.5)  # 固定：y軸の最小値，最大値
