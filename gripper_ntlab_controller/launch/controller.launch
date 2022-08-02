@@ -2,14 +2,14 @@
     <arg name="baud" default="460800" />
 
     <!-- Left -->
-    <arg name="fs1_port" default="/dev/ttyUSB0" />
-    <arg name="fs2_port" default="/dev/ttyUSB2" />
-    <arg name="fs3_port" default="/dev/ttyUSB1" />
+    <arg name="fs1_port" default="/dev/ttyUSB1" />
+    <arg name="fs2_port" default="/dev/ttyUSB0" />
+    <arg name="fs3_port" default="/dev/ttyUSB2" />
 
     <!-- Right -->
-    <arg name="fs4_port" default="/dev/ttyUSB3" />
+    <arg name="fs4_port" default="/dev/ttyUSB5" />
     <arg name="fs5_port" default="/dev/ttyUSB4" />
-    <arg name="fs6_port" default="/dev/ttyUSB5" />
+    <arg name="fs6_port" default="/dev/ttyUSB3" />
 
     <arg name="filtered" default="True" />
     <arg name="hpf_threshold" default="0.01" /> <!-- threshold to pass data higher than value -->
@@ -76,6 +76,7 @@
         <param name="fs2_reset" type="string" value="/fs2_reset" />
         <param name="fs3_reset" type="string" value="/fs3_reset" />
         <param name="cop_pub" type="string" value="/cop_left" />
+        <param name="pressure" type="string" value="/pressure_left" />
     </node>
 
     <!-- Right -->
@@ -88,6 +89,7 @@
         <param name="fs2_reset" type="string" value="/fs5_reset" />
         <param name="fs3_reset" type="string" value="/fs6_reset" />
         <param name="cop_pub" type="string" value="/cop_right" />
+        <param name="pressure" type="string" value="/pressure_right" />
     </node>
 
 </launch>

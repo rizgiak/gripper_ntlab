@@ -19,7 +19,6 @@ class COPCalculateNode:
     def fs3_callback(self, data):
         self.fs3_data = data.data
 
-    # TODO: fix cop calculation
     def cop_calculation(self):
         data = Point32()
 
@@ -39,6 +38,9 @@ class COPCalculateNode:
         data.y = y_cop
         data.z = 0
         return data, True
+
+    def total_pressure(self):
+        return self.fs1_data + self.fs2_data + self.fs3_data
 
     def draw_plot(self):
         print("draw plot")
@@ -61,12 +63,14 @@ class COPCalculateNode:
         fs2_reset = rospy.get_param("~fs2_reset", "/fs2_reset")
         fs3_reset = rospy.get_param("~fs3_reset", "/fs3_reset")
         cop_pub = rospy.get_param("~cop_pub", "/cop")
+        pressure = rospy.get_param("~pressure", "/pressure")
 
         self.title = rospy.get_param("~title", "Center of Pressure")
 
 
         # Set publisher
         self.pub = rospy.Publisher(cop_pub, Point32, queue_size=10)
+        self.pressure_pub = rospy.Publisher(pressure, Float32, queue_size=10)
         self.pub_fs1_reset = rospy.Publisher(fs1_reset, Empty, queue_size=10)
         self.pub_fs2_reset = rospy.Publisher(fs2_reset, Empty, queue_size=10)
         self.pub_fs3_reset = rospy.Publisher(fs3_reset, Empty, queue_size=10)
@@ -122,6 +126,8 @@ class COPCalculateNode:
                 y.pop(0)
                 li.set_xdata(x)
                 li.set_ydata(y)
+                li.set_linewidth(self.total_pressure())
                 plt.draw()
                 plt.pause(0.1)
                 self.pub.publish(ret)
+                self.pressure_pub.publish(self.total_pressure())
