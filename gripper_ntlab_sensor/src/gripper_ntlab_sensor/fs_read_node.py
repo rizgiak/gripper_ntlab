@@ -64,6 +64,7 @@ class FSReadNode:
         rospy.init_node(node_name)
 
         # Param load
+        self.node_name = node_name
         self.mode = rospy.get_param("~mode", "run")
         port = rospy.get_param("~port", "/dev/ttyUSB0")
         baud = rospy.get_param("~baud", 460800)
@@ -91,9 +92,9 @@ class FSReadNode:
         """
         if self.mode == "calibration":
             if(self.fs_zero_calibration(self.ser)):
-                print(self.topic_name + " calibration succeed.")
+                print(self.node_name + " calibration succeed.")
             else:
-                print(self.topic_name + " calibration failed.")
+                print(self.node_name + " calibration failed.")
         elif self.mode == "run":
             while not rospy.is_shutdown():
                 ret, success = self.read_sensor(self.ser, self.filtered)
