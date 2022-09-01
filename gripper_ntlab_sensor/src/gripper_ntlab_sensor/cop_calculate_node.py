@@ -28,7 +28,7 @@ class COPCalculateNode:
         x_den = (self.fs3_data + self.fs2_data) * 2
         y_den = (self.fs1_data + self.fs2_data + self.fs3_data) * 2
 
-        if x_den < 0.001 or y_den < 0.001:
+        if x_den < 0.001 or y_den < 0.001 or self.total_pressure() < 0.05: # add filter
             x_cop = y_cop = 0
         else:
             x_cop = (self.fs3_data - self.fs2_data) * dx / x_den
@@ -127,7 +127,7 @@ class COPCalculateNode:
                 li.set_xdata(x)
                 li.set_ydata(y)
                 li.set_linewidth(self.total_pressure())
-                plt.draw()
-                plt.pause(0.1)
+                # plt.draw()
+                # plt.pause(0.1)
                 self.pub.publish(ret)
                 self.pressure_pub.publish(self.total_pressure())
