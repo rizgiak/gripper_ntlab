@@ -1,4 +1,4 @@
-#include <gripper_ntlab_controller/JointPosition.h>
+#include <gripper_ntlab_msgs/JointPosition.h>
 #include <std_msgs/Float64.h>
 
 #include <iostream>
@@ -14,11 +14,11 @@ int main(int argc, char** argv) {
     ros::init(argc, argv, "calibrate_position");
 
     ros::NodeHandle n;
-    ros::Publisher fake_controller = n.advertise<gripper_ntlab_controller::JointPosition>("gripper_ntlab/SetPosition", 10);
+    ros::Publisher fake_controller = n.advertise<gripper_ntlab_msgs::JointPosition>("gripper_ntlab/SetPosition", 10);
     ros::Rate loop_rate(0.2);
 
     while (ros::ok()) {
-        gripper_ntlab_controller::JointPosition msg;
+        gripper_ntlab_msgs::JointPosition msg;
         msg.mode = 124;
         fake_controller.publish(msg);
         loop_rate.sleep();

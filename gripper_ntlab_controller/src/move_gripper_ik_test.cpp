@@ -1,6 +1,6 @@
 
-#include <gripper_ntlab_controller/CartesianPosition.h>
-#include <gripper_ntlab_controller/JointPosition.h>
+#include <gripper_ntlab_msgs/CartesianPosition.h>
+#include <gripper_ntlab_msgs/JointPosition.h>
 #include <std_msgs/Float64.h>
 
 #include <iostream>
@@ -16,10 +16,10 @@ int main(int argc, char** argv) {
     ros::init(argc, argv, "move_gripper_ik_test");
 
     ros::NodeHandle n;
-    ros::Publisher fake_controller = n.advertise<gripper_ntlab_controller::CartesianPosition>("cobotta/hand_set_cartesian", 10);
+    ros::Publisher fake_controller = n.advertise<gripper_ntlab_msgs::CartesianPosition>("cobotta/hand_set_cartesian", 10);
     ros::Rate loop_rate(30);
 
-    gripper_ntlab_controller::CartesianPosition msg;
+    gripper_ntlab_msgs::CartesianPosition msg;
     msg.torque = true;
     msg.x1 = 0.2240;
     msg.y1 = -0.0537;

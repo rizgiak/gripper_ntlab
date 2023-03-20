@@ -1,6 +1,6 @@
 #include <errno.h>
 #include <fcntl.h>
-#include <gripper_ntlab_controller/JointPosition.h>
+#include <gripper_ntlab_msgs/JointPosition.h>
 #include <math.h>
 #include <std_msgs/Int8.h>
 #include <stdio.h>
@@ -102,7 +102,7 @@ void jointSubCallback(const sensor_msgs::JointState::ConstPtr& msg) {
 }
 
 int main(int argc, char** argv) {
-    ros::init(argc, argv, "gripper_ntlab_controller");
+    ros::init(argc, argv, "gripper_ntlab_msgs");
     ros::NodeHandle n;
 
     ros::Publisher robot_pub = n.advertise<moveit_msgs::DisplayRobotState>("gripper_ntlab/display_robot_state", 10);

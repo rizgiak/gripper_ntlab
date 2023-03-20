@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(gripper_ntlab_controller)
+project(gripper_ntlab_msgs)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 add_compile_options(-std=c++11)
@@ -11,7 +11,6 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   std_msgs
   message_generation
-  gripper_ntlab_msgs
 )
 
 set(PROJECT_DEPS
@@ -52,7 +51,7 @@ set(PROJECT_DEPS
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
-# add_message_files( FILES JointPosition.msg CartesianPosition.msg)
+add_message_files( FILES JointPosition.msg CartesianPosition.msg)
 
 ## Generate services in the 'srv' folder
 # add_service_files(
@@ -69,9 +68,11 @@ set(PROJECT_DEPS
 # )
 
 ## Generate added messages and services with any dependencies listed here
-# generate_messages(
-#   DEPENDENCIES std_msgs  # Or other packages containing msgs
-# )
+generate_messages(
+  DEPENDENCIES ${MSG_DEPS}  # Or other packages containing msgs
+)
+
+catkin_package(CATKIN_DEPENDS message_runtime ${MSG_DEPS})
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -102,11 +103,6 @@ set(PROJECT_DEPS
 ## LIBRARIES: libraries you create in this project that dependent projects also need
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
-catkin_package(
-  INCLUDE_DIRS include
-  CATKIN_DEPENDS message_runtime
-  LIBRARIES gripper_ntlab_controller
-)
 
 ###########
 ## Build ##
@@ -114,14 +110,8 @@ catkin_package(
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
-include_directories(
-	include ${catkin_INCLUDE_DIRS}
-)
 
 ## Declare a C++ library
-add_library(gripper_ntlab_controller 
-  src/gripper_ntlab_controller.cpp
-)
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
@@ -167,30 +157,6 @@ include_directories(${THIS_PACKAGE_INCLUDE_DIRS} ${catkin_INCLUDE_DIRS} ${Boost_
 #   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 # )
-
-add_executable(cobotta_gripper_ntlab_controller src/cobotta_gripper_ntlab_controller.cpp)
-target_link_libraries(cobotta_gripper_ntlab_controller ${catkin_LIBRARIES})
-add_dependencies(cobotta_gripper_ntlab_controller ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-
-add_executable(move_gripper src/move_gripper.cpp)
-target_link_libraries(move_gripper ${catkin_LIBRARIES})
-add_dependencies(move_gripper ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-
-add_executable(move_gripper_ik_test src/move_gripper_ik_test.cpp)
-target_link_libraries(move_gripper_ik_test ${catkin_LIBRARIES})
-add_dependencies(move_gripper_ik_test ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-
-install(TARGETS move_gripper cobotta_gripper_ntlab_controller move_gripper_ik_test
-  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-)
-
-install(
-  DIRECTORY include/${PROJECT_NAME}/
-  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
-)
-
 
 # all install targets should use catkin DESTINATION variables
 # See http://ros.org/doc/api/catkin/html/adv_user_guide/variables.html
