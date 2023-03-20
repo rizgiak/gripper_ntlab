@@ -127,7 +127,7 @@ class COPCalculateNode:
                 li.set_xdata(x)
                 li.set_ydata(y)
                 li.set_linewidth(self.total_pressure())
-                # plt.draw()
+                # plt.draw()  # uncomment to show the visualization of CoP
                 # plt.pause(0.1)
                 self.pub.publish(ret)
                 self.pressure_pub.publish(self.total_pressure())
